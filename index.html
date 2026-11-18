@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Hub</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+    body { background: #121212; color: #fff; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+    header {
+      height: 56px;
+      background: #1e1e1e;
+      border-bottom: 1px solid #333;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    #menu-btn {
+      background: #2c2c2c;
+      color: #fff;
+      border: 1px solid #444;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #menu-btn:hover { background: #3a3a3a; }
+    #app-title { font-size: 18px; font-weight: bold; }
+
+    main { flex: 1; position: relative; overflow-y: auto; }
+
+    #tiles-view {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .tile {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 24px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .tile:hover { border-color: #007acc; transform: translateY(-2px); }
+    .tile h3 { margin-bottom: 8px; color: #4da6ff; }
+    .tile p { font-size: 14px; color: #aaa; }
+
+    #app-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: none;
+      background: #121212;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <button id="menu-btn" onclick="showTiles()">☰ Kacheln</button>
+    <span id="app-title">Übersicht</span>
+  </header>
+
+  <main>
+    <div id="tiles-view">
+      <div class="tile" onclick="loadTool('tools/rechner1.html', 'Rechner 1')">
+        <h3>Rechner 1</h3>
+        <p>Erster Test-Rechner</p>
+      </div>
+    </div>
+
+    <iframe id="app-frame"></iframe>
+  </main>
+
+  <script>
+    const tilesView = document.getElementById('tiles-view');
+    const appFrame = document.getElementById('app-frame');
+    const appTitle = document.getElementById('app-title');
+
+    function loadTool(url, title) {
+      tilesView.style.display = 'none';
+      appFrame.src = url;
+      appFrame.style.display = 'block';
+      appTitle.innerText = title;
+    }
+
+    function showTiles() {
+      appFrame.style.display = 'none';
+      appFrame.src = '';
+      tilesView.style.display = 'grid';
+      appTitle.innerText = 'Übersicht';
+    }
+  </script>
+
+</body>
+</html>
