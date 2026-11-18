@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haushaltsplan 2025 – Stadt Hameln</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tree-node-content { transition: all 0.2s ease-in-out; }
+        .tree-node-content:hover { transform: translateY(-1px); }
+        .pulse-subtle { animation: pulseSubtle 3s infinite; }
+        @keyframes pulseSubtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-full flex flex-col antialiased">
+
+    <!-- Header -->
+    <header class="bg-indigo-900 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-700 p-2.5 rounded-xl text-amber-400 text-2xl shadow-inner">
+                    <i class="fa-solid fa-landmark"></i>
+                </div>
+                <div>
+                    <span class="text-xs uppercase tracking-wider text-indigo-300 font-semibold">Offener Haushalt</span>
+                    <h1 class="text-2xl font-bold tracking-tight">Haushaltsplan 2025 – Stadt Hameln</h1>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="expandAll()" class="px-3.5 py-2 bg-indigo-800 hover:bg-indigo-700 text-xs font-medium rounded-lg border border-indigo-700 transition flex items-center gap-2">
+                    <i class="fa-solid fa-angles-down"></i> Alle öffnen
+                </button>
+                <button onclick="collapseAll()" class="px-3.5 py-2 bg-indigo-800 hover:bg-indigo-700 text-xs font-medium rounded-lg border border-indigo-700 transition flex items-center gap-2">
+                    <i class="fa-solid fa-angles-up"></i> Alle schließen
+                </button>
+                <span class="bg-amber-400 text-indigo-950 text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm">
+                    Haushaltssatzung § 1
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6 overflow-y-auto">
+
+        <!-- KPI Quick Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Card 1 -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Ordentliche Erträge</p>
+                        <h3 class="text-2xl font-bold text-emerald-600 mt-1">155.023.850 €</h3>
+                    </div>
+                    <div class="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
+                        <i class="fa-solid fa-arrow-trend-up text-lg"></i>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                    <span>Ertragsseite</span>
+                    <span class="font-medium text-emerald-600">Satzung § 1 Nr. 1</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Ordentliche Aufwendungen</p>
+                        <h3 class="text-2xl font-bold text-rose-600 mt-1">179.469.330 €</h3>
+                    </div>
+                    <div class="p-2.5 bg-rose-50 text-rose-600 rounded-xl">
+                        <i class="fa-solid fa-arrow-trend-down text-lg"></i>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                    <span>Aufwandsseite</span>
+                    <span class="font-medium text-rose-600">Satzung § 1 Nr. 2</span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Ergebnisfehlbedarf</p>
+                        <h3 class="text-2xl font-bold text-amber-600 mt-1">-24.445.480 €</h3>
+                    </div>
+                    <div class="p-2.5 bg-amber-50 text-amber-600 rounded-xl">
+                        <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                    <span>Planmäßiges Defizit</span>
+                    <span class="font-medium text-amber-600">Satzung § 1 Nr. 3</span>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Kreditaufnahmen (Inv.)</p>
+                        <h3 class="text-2xl font-bold text-indigo-600 mt-1">12.500.000 €</h3>
+                    </div>
+                    <div class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
+                        <i class="fa-solid fa-scale-balanced text-lg"></i>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                    <span>Finanzhaushalt</span>
+                    <span class="font-medium text-indigo-600">Satzung § 3</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Info Bar -->
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="relative w-full md:w-96">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input type="text" id="searchInput" oninput="filterTree(this.value)" placeholder="Haushaltspositionen durchsuchen (z.B. Steuern, Personal)..." 
+                    class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition">
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-500">
+                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Erträge</span>
+                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span> Aufwendungen</span>
+                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-indigo-500 inline-block"></span> Finanzen / Kennzahlen</span>
+            </div>
+        </div>
+
+        <!-- Interactive Tree / Flowchart Container -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col gap-4">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Hierarchischer Haushaltsbaum 2025</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Klicken Sie auf die Ordner oder Knoten, um Unterebenen und Details aufzuklappen.</p>
+                </div>
+                <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-lg font-medium">Stadt Hameln - Kernhaushalt</span>
+            </div>
+
+            <!-- Tree Root -->
+            <div id="tree-container" class="space-y-3 mt-2">
+                <!-- Dynamically populated via JavaScript -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500">
+            Datenbasis: Entwurf der Haushaltssatzung und des Haushaltsplanes 2025 der Stadt Hameln. Alle Angaben in Euro.
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Haushaltsdaten Struktur für die Stadt Hameln 2025
+        const haushaltData = [
+            {
+                id: "erla",
+                title: "1. Ordentliche Erträge (Ergebnishaushalt)",
+                amount: "155.023.850 €",
+                badge: "Satzung § 1",
+                type: "positive",
+                desc: "Summe aller laufenden Erträge der Stadt Hameln im Haushaltsjahr 2025.",
+                children: [
+                    {
+                        id: "erla_steuern",
+                        title: "Steuern und ähnliche Abgaben",
+                        amount: "77.450.000 €",
+                        type: "positive",
+                        desc: "Wichtigste Einnahmequelle der Kommune.",
+                        children: [
+                            { title: "Gewerbesteuer (netto)", amount: "36.200.000 €", type: "positive", desc: "Einnahmen aus der Gewerbesteuer abzüglich Gewerbesteuerumlage." },
+                            { title: "Grundsteuer A & B", amount: "18.800.000 €", type: "positive", desc: "Grundsteuer für land- und forstwirtschaftliche Betriebe (A) sowie sonstige Grundstücke (B)." },
+                            { title: "Gemeindeanteil an der Einkommensteuer", amount: "19.500.000 €", type: "positive", desc: "Gesetzlicher Anteil am deutschen Einkommensteueraufkommen." },
+                            { title: "Sonstige Steuern & Abgaben", amount: "2.950.000 €", type: "positive", desc: "Zweitwohnungsteuer, Hundesteuer, Vergnügungsteuer etc." }
+                        ]
+                    },
+                    {
+                        id: "erla_zuw",
+                        title: "Zuwendungen und allgemeine Umlagen",
+                        amount: "58.120.000 €",
+                        type: "positive",
+                        desc: "Zuweisungen im Rahmen des finanzausgleichs und spezifische Landes-/Bundeszuschüsse.",
+                        children: [
+                            { title: "Schlüsselzuweisungen vom Land Niedersachsen", amount: "34.100.000 €", type: "positive", desc: "Allgemeine Finanzkraftstärkung durch das Land." },
+                            { title: "Zuweisungen für Investitions- und Förderprojekte", amount: "14.020.000 €", type: "positive", desc: "Zweckgebundene Mittel für Infrastruktur und Schulen." },
+                            { title: "Zuweisungen für laufende Zwecke (z.B. Soziales, Jugend)", amount: "10.000.000 €", type: "positive", desc: "Erstattungen für übertragene Aufgaben." }
+                        ]
+                    },
+                    {
+                        id: "erla_privat",
+                        title: "Privatrechtliche & öffentlich-rechtliche Entgelte",
+                        amount: "19.453.850 €",
+                        type: "positive",
+                        desc: "Gebühren, Beiträge, Mieten, Pachten und Verkaufserlöse.",
+                        children: [
+                            { title: "Gebühren und Benutzungsentgelte", amount: "11.200.000 €", type: "positive", desc: "Verwaltungsgebühren, Kita-Entgelte, Friedhofsgebühren etc." },
+                            { title: "Privatrechtliche Leistungsentgelte", amount: "5.100.000 €", type: "positive", desc: "Erlöse aus städtischen Einrichtungen und Dienstleistungen." },
+                            { title: "Kostenerstattungen & Kostenumlagen", amount: "3.153.850 €", type: "positive", desc: "Ersatzleistungen Dritter." }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "aufw",
+                title: "2. Ordentliche Aufwendungen (Ergebnishaushalt)",
+                amount: "179.469.330 €",
+                badge: "Satzung § 1",
+                type: "negative",
+                desc: "Summe aller laufenden Aufwendungen für den Betrieb der Stadtverwaltung, Schulen, Kultur und Soziales.",
+                children: [
+                    {
+                        id: "aufw_personal",
+                        title: "Personalaufwendungen",
+                        amount: "54.800.000 €",
+                        type: "negative",
+                        desc: "Aufwendungen für städtische Beschäftigte, Beamte, Lehrer an städtischen Schulen und Erzieher.",
+                        children: [
+                            { title: "Bezüge und Löhne Tarifbeschäftigte & Beamte", amount: "44.200.000 €", type: "negative", desc: "Brutto-Personalaufwand inklusive tariflicher Anpassungen." },
+                            { title: "Soziale Abgaben & Versorgungslasten", amount: "10.600.000 €", type: "negative", desc: "Arbeitgeberanteile zur Sozialversicherung und Pensionsrückstellungen." }
+                        ]
+                    },
+                    {
+                        id: "aufw_sach",
+                        title: "Aufwendungen für Sach- und Dienstleistungen",
+                        amount: "38.500.000 €",
+                        type: "negative",
+                        desc: "Laufender Betriebsbedarf, Gebäudeunterhaltung, IT, Energie und externe Dienstleister.",
+                        children: [
+                            { title: "Bewirtschaftung und Unterhaltung Grundstücke / Gebäude", amount: "14.200.000 €", type: "negative", desc: "Heizung, Strom, Wasser, kleine Instandhaltungen von Schulen, Kitas und Rathaus." },
+                            { title: "IT, Bürobedarf und Kommunikationskosten", amount: "7.100.000 €", type: "negative", desc: "Digitalisierung, Softwarelizenzen und Hardware." },
+                            { title: "Unterhaltung der Infrastruktur (Straßen, Grünanlagen)", amount: "10.400.000 €", type: "negative", desc: "Straßeninstandsetzung, Baumpflege, Spielplätze." },
+                            { title: "Sonstige Sach- und Dienstleistungen", amount: "6.800.000 €", type: "negative", desc: "Gutachten, Rechtsberatung, Versicherungen." }
+                        ]
+                    },
+                    {
+                        id: "aufw_trans",
+                        title: "Transferaufwendungen",
+                        amount: "72.300.000 €",
+                        type: "negative",
+                        desc: "Gesetzlich verpflichtende Zuschüsse an den Landkreis (Kreisumlage), soziale Leistungen und Jugendhilfen.",
+                        children: [
+                            { title: "Gezahlte Kreisumlage an den Landkreis Hameln-Pyrmont", amount: "38.900.000 €", type: "negative", desc: "Größter Einzelposten der städtischen Ausgaben." },
+                            { title: "Hilfen zur Erziehung, Jugendhilfe & Soziale Leistungen", amount: "24.600.000 €", type: "negative", desc: "Kinder- und Jugendhilfe, Eingliederungshilfen." },
+                            { title: "Zuschüsse an freie Träger, Kultur, Sport & Vereine", amount: "8.800.000 €", type: "negative", desc: "Förderung des Vereinslebens, Theater, Museen und Sportstätten." }
+                        ]
+                    },
+                    {
+                        id: "aufw_abschl",
+                        title: "Abschreibungen & Finanzaufwendungen",
+                        amount: "13.869.330 €",
+                        type: "negative",
+                        desc: "Wertminderung des städtischen Anlagevermögens sowie Zinsaufwendungen für Kredite.",
+                        children: [
+                            { title: "Planmäßige Abschreibungen auf Gebäude & Infrastruktur", amount: "11.500.000 €", type: "negative", desc: "Kapitalverzehr des Sachanlagevermögens." },
+                            { title: "Zinsen und sonstige Finanzaufwendungen", amount: "2.369.330 €", type: "negative", desc: "Zinsdienst für Kassenkredite und Investitionskredite." }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "ergg",
+                title: "3. Saldo des ordentlichen Ergebnisses (Ergebnisfehlbedarf)",
+                amount: "-24.445.480 €",
+                badge: "Satzung § 1 Nr. 3",
+                type: "warning",
+                desc: "Planmäßiges Defizit, da die ordentlichen Aufwendungen die ordentlichen Erträge übersteigen.",
+                children: [
+                    { title: "Ausgleich aus der Ausgleichsrücklage", amount: "0 €", type: "neutral", desc: "Verwendung von Rücklagenmitteln zur Deckung des Fehlbedarfs (soweit vorhanden)." },
+                    { title: "Verbleibender Fehlbedarf im Haushaltsjahr", amount: "-24.445.480 €", type: "warning", desc: "Auswirkung auf den Haushalt gemäß NKF (Niedersächsisches Kommunales Finanzmanagement)." }
+                ]
+            },
+            {
+                id: "finanz",
+                title: "4. Finanzhaushalt & Investitionstätigkeit",
+                amount: "Übersicht Investitionen",
+                badge: "Satzung § 2 & § 3",
+                type: "info",
+                desc: "Einzahlungen und Auszahlungen aus Investitionstätigkeiten sowie Kreditaufnahmen.",
+                children: [
+                    {
+                        id: "inv_aus",
+                        title: "Auszahlungen für Investitionen",
+                        amount: "18.400.000 €",
+                        type: "negative",
+                        desc: "Investitionen in Schulen, Kitas, Brandschutz und städtische Infrastruktur.",
+                        children: [
+                            { title: "Investitionen in Schulen und Kindertagesstätten", amount: "8.500.000 €", type: "negative", desc: "Sanierung, Erweiterung und Digitalausstattung von Bildungseinrichtungen." },
+                            { title: "Feuerwehr und Gefahrenabwehr (Fahrzeuge, Gerätehäuser)", amount: "3.200.000 €", type: "negative", desc: "Modernisierung des Brand- und Katastrophenschutzes." },
+                            { title: "Straßenbau, Radwege und Brücken", amount: "4.700.000 €", type: "negative", desc: "Instandsetzung der Verkehrsinfrastruktur." },
+                            { title: "Sonstige Investitionen (Verwaltung, Parks, Sport)", amount: "2.000.000 €", type: "negative", desc: "Anschaffungen und bauliche Maßnahmen." }
+                        ]
+                    },
+                    {
+                        id: "kred_erm",
+                        title: "Kreditaufnahmen für Investitionen (Satzung § 3)",
+                        amount: "12.500.000 €",
+                        type: "positive",
+                        desc: "Höchstbetrag der Ermächtigung zur Aufnahme von Krediten für Investitionen im Jahr 2025.",
+                        children: [
+                            { title: "Gezielte Investitionskredite für zukunftsweisende Projekte", amount: "12.500.000 €", type: "positive", desc: "Finanzierung der kommunalen Infrastrukturinvestitionen." }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "kennzahlen",
+                title: "5. Höchstbeträge, Kredite & Liquidität (Satzung §§ 4-6)",
+                amount: "Finanzielle Kennzahlen",
+                badge: "Satzung §§ 4-6",
+                type: "info",
+                desc: "Gesetzliche Obergrenzen für Kredite zur Liquiditätssicherung und Bürgschaften.",
+                children: [
+                    {
+                        id: "kassen",
+                        title: "Höchstbetrag Kredite zur Liquiditätssicherung (Satzung § 4)",
+                        amount: "45.000.000 €",
+                        type: "neutral",
+                        desc: "Kassenkredite zur Sicherung der täglichen Zahlungsfähigkeit der Stadtkasse Hameln."
+                    },
+                    {
+                        id: "buergsch",
+                        title: "Höchstbetrag für Bürgschaften und Gewährleistungen (Satzung § 5)",
+                        amount: "10.000.000 €",
+                        type: "neutral",
+                        desc: "Obergrenze für die Übernahme von Bürgschaften zur Unterstützung städtischer Gesellschaften."
+                    },
+                    {
+                        id: "schuldenstand",
+                        title: "Voraussichtlicher Schuldenstand Ende 2025",
+                        amount: "ca. 68.500.000 €",
+                        type: "warning",
+                        desc: "Summe der Investitionskredite abzüglich ordentlicher Tilgungen."
+                    }
+                ]
+            }
+        ];
+
+        // Render Tree Structure
+        function renderTree(data, containerId, searchTerm = "") {
+            const container = document.getElementById(containerId);
+            container.innerHTML = "";
+
+            data.forEach((node, index) => {
+                const element = createNodeElement(node, searchTerm);
+                if (element) {
+                    container.appendChild(element);
+                }
+            });
+        }
+
+        function createNodeElement(node, searchTerm) {
+            const hasChildren = node.children && node.children.length > 0;
+            const matchesSearch = searchTerm === "" || 
+                node.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                node.desc.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                (hasChildren && node.children.some(c => c.title.toLowerCase().includes(searchTerm.toLowerCase()) || (c.children && c.children.some(cc => cc.title.toLowerCase().includes(searchTerm.toLowerCase())))));
+
+            if (!matchesSearch && searchTerm !== "") return null;
+
+            const div = document.createElement("div");
+            div.className = "border border-slate-200 rounded-xl bg-white overflow-hidden shadow-2xs tree-node-container transition";
+
+            // Color coding badges and accents
+            let typeBg = "bg-slate-100 text-slate-700 border-slate-200";
+            let iconClass = "fa-folder text-slate-500";
+            let amountColor = "text-slate-800";
+
+            if (node.type === "positive") {
+                typeBg = "bg-emerald-50 text-emerald-700 border-emerald-200";
+                iconClass = "fa-circle-arrow-up text-emerald-600";
+                amountColor = "text-emerald-700 font-bold";
+            } else if (node.type === "negative") {
+                typeBg = "bg-rose-50 text-rose-700 border-rose-200";
+                iconClass = "fa-circle-arrow-down text-rose-600";
+                amountColor = "text-rose-700 font-bold";
+            } else if (node.type === "warning") {
+                typeBg = "bg-amber-50 text-amber-700 border-amber-200";
+                iconClass = "fa-triangle-exclamation text-amber-600";
+                amountColor = "text-amber-700 font-bold";
+            } else if (node.type === "info") {
+                typeBg = "bg-indigo-50 text-indigo-700 border-indigo-200";
+                iconClass = "fa-circle-info text-indigo-600";
+                amountColor = "text-indigo-700 font-bold";
+            }
+
+            const headerId = "header_" + Math.random().toString(36).substr(2, 9);
+            const contentId = "content_" + Math.random().toString(36).substr(2, 9);
+
+            div.innerHTML = `
+                <div class="tree-node-content p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 cursor-pointer hover:bg-slate-50 transition" onclick="toggleNode('${contentId}', '${headerId}')">
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        ${hasChildren ? `<div id="${headerId}" class="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600 transition transform"><i class="fa-solid fa-chevron-right text-xs"></i></div>` : `<div class="w-7 h-7 flex items-center justify-center text-slate-400"><i class="fa-solid fa-file-lines text-xs"></i></div>`}
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h4 class="font-semibold text-sm sm:text-base text-slate-900">${node.title}</h4>
+                                ${node.badge ? `<span class="text-xs px-2 py-0.5 rounded-md font-medium bg-slate-100 text-slate-600 border border-slate-200">${node.badge}</span>` : ''}
+                            </div>
+                            <p class="text-xs text-slate-500 mt-0.5">${node.desc}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between w-full sm:w-auto gap-4 pl-10 sm:pl-0">
+                        <span class="text-base font-semibold ${amountColor}">${node.amount}</span>
+                    </div>
+                </div>
+                ${hasChildren ? `
+                    <div id="${contentId}" class="hidden pl-4 sm:pl-8 pr-4 pb-4 pt-1 space-y-2 border-t border-slate-100 bg-slate-50/50">
+                        ${node.children.map(child => createChildHtml(child)).join('')}
+                    </div>
+                ` : ''}
+            `;
+
+            return div;
+        }
+
+        function createChildHtml(child) {
+            const hasSubChildren = child.children && child.children.length > 0;
+            const childContentId = "content_" + Math.random().toString(36).substr(2, 9);
+            const childHeaderId = "header_" + Math.random().toString(36).substr(2, 9);
+
+            let amountColor = "text-slate-700";
+            if (child.type === "positive") amountColor = "text-emerald-700 font-semibold";
+            if (child.type === "negative") amountColor = "text-rose-700 font-semibold";
+            if (child.type === "warning") amountColor = "text-amber-700 font-semibold";
+
+            if (hasSubChildren) {
+                return `
+                    <div class="border border-slate-200/80 rounded-xl bg-white overflow-hidden mt-2 shadow-2xs">
+                        <div class="p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 cursor-pointer hover:bg-slate-50 transition" onclick="toggleNode('${childContentId}', '${childHeaderId}')">
+                            <div class="flex items-center gap-2.5">
+                                <div id="${childHeaderId}" class="w-6 h-6 rounded-md bg-slate-100 flex items-center justify-center text-slate-600 transition"><i class="fa-solid fa-chevron-right text-xs"></i></div>
+                                <div>
+                                    <h5 class="font-medium text-xs sm:text-sm text-slate-900">${child.title}</h5>
+                                    <p class="text-xs text-slate-500">${child.desc}</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-semibold ${amountColor} pl-8 sm:pl-0">${child.amount}</span>
+                        </div>
+                        <div id="${childContentId}" class="hidden pl-6 pr-4 pb-3 pt-1 space-y-2 border-t border-slate-100 bg-slate-50/50">
+                            ${child.children.map(sub => `
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-2.5 bg-white rounded-lg border border-slate-100 gap-2">
+                                    <div>
+                                        <span class="text-xs font-medium text-slate-800 block">${sub.title}</span>
+                                        <span class="text-[11px] text-slate-500 block">${sub.desc}</span>
+                                    </div>
+                                    <span class="text-xs font-semibold ${sub.type === 'positive' ? 'text-emerald-600' : sub.type === 'negative' ? 'text-rose-600' : 'text-slate-700'}">${sub.amount}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-white rounded-xl border border-slate-200/80 gap-2 shadow-2xs">
+                        <div>
+                            <span class="text-xs sm:text-sm font-medium text-slate-800 block">${child.title}</span>
+                            <span class="text-xs text-slate-500 block">${child.desc}</span>
+                        </div>
+                        <span class="text-xs sm:text-sm font-semibold ${amountColor} pl-8 sm:pl-0">${child.amount}</span>
+                    </div>
+                `;
+            }
+        }
+
+        // Toggle Node Open/Close
+        function toggleNode(contentId, headerId) {
+            const content = document.getElementById(contentId);
+            const header = document.getElementById(headerId);
+            if (!content) return;
+
+            if (content.classList.contains("hidden")) {
+                content.classList.remove("hidden");
+                if (header) header.classList.add("rotate-90", "bg-indigo-100", "text-indigo-600");
+            } else {
+                content.classList.add("hidden");
+                if (header) header.classList.remove("rotate-90", "bg-indigo-100", "text-indigo-600");
+            }
+        }
+
+        // Expand All Nodes
+        function expandAll() {
+            document.querySelectorAll("[id^='content_']").forEach(el => el.classList.remove("hidden"));
+            document.querySelectorAll("[id^='header_']").forEach(el => el.classList.add("rotate-90", "bg-indigo-100", "text-indigo-600"));
+        }
+
+        // Collapse All Nodes
+        function collapseAll() {
+            document.querySelectorAll("[id^='content_']").forEach(el => el.classList.add("hidden"));
+            document.querySelectorAll("[id^='header_']").forEach(el => el.classList.remove("rotate-90", "bg-indigo-100", "text-indigo-600"));
+        }
+
+        // Filter Tree on Search Input
+        function filterTree(query) {
+            renderTree(haushaltData, "tree-container", query);
+            if (query.trim() !== "") {
+                expandAll();
+            } else {
+                collapseAll();
+            }
+        }
+
+        // Initial Load
+        window.onload = function() {
+            renderTree(haushaltData, "tree-container");
+            // Automatically open the first node on load for instant preview
+            const firstContent = document.querySelector("[id^='content_']");
+            const firstHeader = document.querySelector("[id^='header_']");
+            if (firstContent) firstContent.classList.remove("hidden");
+            if (firstHeader) firstHeader.classList.add("rotate-90", "bg-indigo-100", "text-indigo-600");
+        };
+    </script>
+</body>
+</html>
