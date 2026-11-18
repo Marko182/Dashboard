@@ -49,7 +49,7 @@
       transition: 0.15s;
     }
     .tile:hover { border-color: #007acc; transform: translateY(-2px); }
-    .tile h3 { margin-bottom: 8px; color: #4da6ff; }
+    .tile h3 { margin-bottom: 8px; color: #4da6ff; text-transform: capitalize; }
     .tile p { font-size: 14px; color: #aaa; }
 
     #app-frame {
@@ -70,19 +70,54 @@
 
   <main>
     <div id="tiles-view">
-      <div class="tile" onclick="loadTool('tools/rechner1.html', 'Rechner 1')">
-        <h3>Rechner 1</h3>
-        <p>Erster Test-Rechner</p>
-      </div>
+      <p style="color: #888;">Suche nach Tools...</p>
     </div>
 
     <iframe id="app-frame"></iframe>
   </main>
 
   <script>
+    // HIER DEINE DATEN EINTRAGEN:
+    const GITHUB_USER = 'DEIN_BENUTZERNAME';
+    const GITHUB_REPO = 'DEIN_REPOSITORY_NAME';
+    const TOOLS_FOLDER = 'tools';
+
     const tilesView = document.getElementById('tiles-view');
     const appFrame = document.getElementById('app-frame');
     const appTitle = document.getElementById('app-title');
+
+    async function loadAutomaticTiles() {
+      try {
+        const response = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${TOOLS_FOLDER}`);
+        if (!response.ok) throw new Error('Ordner nicht gefunden');
+        
+        const files = await response.json();
+        tilesView.innerHTML = ''; // Lade-Text entfernen
+
+        files.forEach(file => {
+          // Nur .html Dateien berücksichtigen
+          if (file.name.endsWith('.html')) {
+            // Dateinamen für die Kachel schön formatieren (z. B. "mein-rechner.html" -> "Mein Rechner")
+            const cleanTitle = file.name
+              .replace('.html', '')
+              .replace(/[-_]/g, ' ');
+
+            const tile = document.createElement('div');
+            tile.className = 'tile';
+            tile.innerHTML = `<h3>${cleanTitle}</h3><p>${file.name}</p>`;
+            tile.onclick = () => loadTool(`${TOOLS_FOLDER}/${file.name}`, cleanTitle);
+            
+            tilesView.appendChild(tile);
+          }
+        });
+
+        if (tilesView.innerHTML === '') {
+          tilesView.innerHTML = '<p style="color: #888;">Keine HTML-Dateien im Ordner gefunden.</p>';
+        }
+      } catch (error) {
+        tilesView.innerHTML = `<p style="color: #ff6b6b;">Fehler beim Laden der Tools: ${error.message}</p>`;
+      }
+    }
 
     function loadTool(url, title) {
       tilesView.style.display = 'none';
@@ -97,6 +132,9 @@
       tilesView.style.display = 'grid';
       appTitle.innerText = 'Übersicht';
     }
+
+    // Beim Start automatisch Kacheln generieren
+    loadAutomaticTiles();
   </script>
 
 </body>
